@@ -1,0 +1,89 @@
+[gd_scene load_steps=20 format=3 uid="uid://bh7og3buobru0"]
+
+[ext_resource type="Script" path="res://player_controller.gd" id="1_ccuye"]
+[ext_resource type="PackedScene" uid="uid://bpx7463adibj4" path="res://meshes/paper_airplane.glb" id="3_6pecl"]
+[ext_resource type="Script" path="res://city_generator.gd" id="3_yqj5t"]
+[ext_resource type="PackedScene" uid="uid://c8irci50a7cfo" path="res://blocks/r_block.tscn" id="4_7f7j1"]
+[ext_resource type="Shader" path="res://sky.gdshader" id="4_rou8h"]
+[ext_resource type="Script" path="res://camera_follow.gd" id="5_66ayd"]
+[ext_resource type="PackedScene" uid="uid://do11suaq1no85" path="res://blocks/back_r_block.tscn" id="6_qimr7"]
+[ext_resource type="PackedScene" uid="uid://cghfl4sfvimcp" path="res://buildings/Large Building-1bt4yYKmuK.glb" id="7_j2ek3"]
+[ext_resource type="PackedScene" uid="uid://cvicrghjwp8fs" path="res://blocks/i_block.tscn" id="7_x7lpn"]
+[ext_resource type="PackedScene" uid="uid://dnfry2yuksv83" path="res://buildings/Large Building-h7Jaq7bqMq.glb" id="8_c22ph"]
+[ext_resource type="PackedScene" uid="uid://bac7o7glqr4vm" path="res://buildings/Large Building-JgGLJH2iXj.glb" id="9_gqh77"]
+[ext_resource type="PackedScene" uid="uid://bpl183pfwakd8" path="res://blocks/i_block_intersection.tscn" id="9_u85uv"]
+[ext_resource type="PackedScene" uid="uid://bsew066vcwuec" path="res://obstacles/balloon.tscn" id="11_3n6fx"]
+[ext_resource type="PackedScene" uid="uid://u85jqj8iwb8j" path="res://buildings/block_building.tscn" id="12_jnwd1"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6k52l"]
+shader = ExtResource("4_rou8h")
+shader_parameter/color_top = Color(0.422205, 0.559261, 1, 1)
+shader_parameter/color_horizon = Color(0.345254, 0.669328, 0.837505, 1)
+shader_parameter/color_bottom = Color(0.0582351, 0.072959, 0.184472, 1)
+shader_parameter/exponent_factor_top = 1.0
+shader_parameter/exponent_factor_bottom = 54.521
+shader_parameter/intensity_amp = 1.0
+
+[sub_resource type="Sky" id="Sky_3arfg"]
+sky_material = SubResource("ShaderMaterial_6k52l")
+
+[sub_resource type="Environment" id="Environment_abiha"]
+background_mode = 2
+sky = SubResource("Sky_3arfg")
+ambient_light_color = Color(1, 1, 1, 1)
+tonemap_mode = 1
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3dxoh"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_6t2lo"]
+plane = Plane(0, 0, 1, 0)
+
+[node name="Game" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.746743, -0.241257, 0.619815, 0, 0.931894, 0.362731, -0.665113, -0.270867, 0.695885, 0, 0, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_abiha")
+
+[node name="PlayerParent" type="Node3D" parent="."]
+
+[node name="Player" type="CharacterBody3D" parent="PlayerParent" node_paths=PackedStringArray("raycast_area")]
+motion_mode = 1
+script = ExtResource("1_ccuye")
+raycast_area = NodePath("../RaycastArea")
+play_area_bounds = Vector2(10, 13)
+
+[node name="PlayerCollider" type="CollisionShape3D" parent="PlayerParent/Player"]
+shape = SubResource("BoxShape3D_3dxoh")
+
+[node name="CameraTarget" type="Node3D" parent="PlayerParent/Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5.5)
+
+[node name="PlayerMesh2" parent="PlayerParent/Player" instance=ExtResource("3_6pecl")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="RaycastArea" type="Area3D" parent="PlayerParent"]
+collision_layer = 2
+collision_mask = 0
+monitorable = false
+
+[node name="RaycastCollider" type="CollisionShape3D" parent="PlayerParent/RaycastArea"]
+shape = SubResource("WorldBoundaryShape3D_6t2lo")
+
+[node name="Camera" type="Camera3D" parent="PlayerParent" node_paths=PackedStringArray("target")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.80825e-07, 0, 5.5)
+top_level = true
+script = ExtResource("5_66ayd")
+target = NodePath("../Player/CameraTarget")
+
+[node name="Background" type="Node3D" parent="." node_paths=PackedStringArray("perspective_reference")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -15, 0)
+script = ExtResource("3_yqj5t")
+city_block_size = 5
+city_blocks = Array[PackedScene]([ExtResource("4_7f7j1"), ExtResource("6_qimr7"), ExtResource("7_x7lpn"), ExtResource("9_u85uv")])
+buildings = Array[PackedScene]([ExtResource("7_j2ek3"), ExtResource("8_c22ph"), ExtResource("9_gqh77"), ExtResource("12_jnwd1")])
+obstacles = Array[PackedScene]([ExtResource("11_3n6fx")])
+starting_speed = 2.5
+speed_increase_rate = 0.0
+perspective_reference = NodePath("../PlayerParent")
