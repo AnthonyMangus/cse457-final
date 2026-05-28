@@ -1,0 +1,9 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://dfl12ycfldi2m"]
+
+[ext_resource type="Texture2D" uid="uid://cvg7foo4sinx4" path="res://materials/textures/Bumpy Tile 2.png" id="1_xvgr5"]
+
+[resource]
+diffuse_mode = 3
+specular_mode = 1
+albedo_texture = ExtResource("1_xvgr5")
+uv1_scale = Vector3(10, 10, 10)

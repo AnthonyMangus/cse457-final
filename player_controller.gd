@@ -2,6 +2,7 @@ extends CharacterBody3D
 class_name Player
 
 @export_range(1., 25., .1) var speed : float = 3.
+@export_range(1., 60., 1.) var rotation_speed : float = 30.
 @export var raycast_area : Area3D
 @export var play_area_bounds : Vector2
 
@@ -21,14 +22,12 @@ func update_target_position(pos : Vector2) -> void:
 	pos_target = pos.clamp(-play_area_bounds, play_area_bounds)
 
 func _physics_process(delta: float) -> void:
-	# var target_velocity := Vector3()
-	# if (pos_target.distance_to(Vector2(position.x, position.y)) > position_tolerance):
-	# 	var plane_velocity := Vector2(position.x, position.y)- pos_target
-	# 	target_velocity = raycast_area.to_global(Vector3(plane_velocity.x, plane_velocity.y, 0) * speed)
-
-	# velocity = lerp(Vector3(target_velocity.x, target_velocity.y, 0), velocity, acceleration) * delta
-
-	# move_and_slide()
-
-	position = lerp(position, Vector3(pos_target.x, pos_target.y, 0), delta*speed)
-	rotation = lerp(rotation, transform.looking_at(Vector3(pos_target.x, pos_target.y, -5)).basis.get_euler(), delta*speed*10)
+	# Lerp position and rotation towards target
+	position = lerp(
+		position,
+		Vector3(pos_target.x, pos_target.y, 0),
+		delta*speed)
+	rotation = lerp(
+		rotation,
+		transform.looking_at(Vector3(pos_target.x, pos_target.y, -5)).basis.get_euler(),
+		delta*rotation_speed)

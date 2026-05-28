@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://bg0icmacckfkl"]
+
+[ext_resource type="Texture2D" uid="uid://c2j674a3kejyy" path="res://materials/textures/Concrete Wall 2.png" id="1_2f13b"]
+
+[resource]
+diffuse_mode = 3
+specular_mode = 1
+albedo_color = Color(0.7385896, 0.7385896, 0.7385896, 1)
+albedo_texture = ExtResource("1_2f13b")
+uv1_scale = Vector3(7.91, 7.91, 7.91)

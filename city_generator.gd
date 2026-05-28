@@ -5,7 +5,7 @@ class_name CityGenerator
 @export var city_blocks : Array[PackedScene] 
 @export var buildings : Array[PackedScene]
 @export var building_materials : Array[Material]
-@export var obstacles : Array[PackedScene]
+# @export var obstacles : Array[PackedScene]
 @export var starting_speed := 1.
 @export var speed_increase_rate := 0.2
 @export var perspective_reference : Node3D
@@ -16,7 +16,7 @@ var path_distance := 0.
 var speed := 0.
 
 const BuildingLabel := "Building"
-const ObstacleLabel := "Obstacle"
+# const ObstacleLabel := "Obstacle"
 
 func _ready() -> void:
 	Global.city = self
@@ -64,7 +64,7 @@ func add_block() -> CityBlock:
 		add_child(new_block)
 	active_blocks.append(new_block)
 	populate_buildings(new_block)
-	populate_obstacles(new_block)
+	# populate_obstacles(new_block)
 	return new_block
 
 func pop_block() -> CityBlock:
@@ -103,17 +103,17 @@ func populate_buildings(block : CityBlock) -> CityBlock:
 				block.add_child(new_building)
 	return block
 
-func populate_obstacles(block : CityBlock) -> CityBlock:
-	for child in block.get_children():
-		if child is Label3D:
-			if child.text == ObstacleLabel:
-				var new_obstacle : Obstacle = obstacles.pick_random().instantiate()
-				new_obstacle.transform = child.transform
-				var obstacle_name := child.name
-				child.queue_free()
-				new_obstacle.name = obstacle_name
-				block.add_child(new_obstacle)
-	return block
+# func populate_obstacles(block : CityBlock) -> CityBlock:
+# 	for child in block.get_children():
+# 		if child is Label3D:
+# 			if child.text == ObstacleLabel:
+# 				var new_obstacle : Obstacle = obstacles.pick_random().instantiate()
+# 				new_obstacle.transform = child.transform
+# 				var obstacle_name := child.name
+# 				child.queue_free()
+# 				new_obstacle.name = obstacle_name
+# 				block.add_child(new_obstacle)
+# 	return block
 
 func ready_obstacles(block : CityBlock) -> void:
 	for child in block.get_children():

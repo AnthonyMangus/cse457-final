@@ -1,8 +1,6 @@
-[gd_scene load_steps=12 format=3 uid="uid://cvicrghjwp8fs"]
+[gd_scene format=3 uid="uid://cvicrghjwp8fs"]
 
-[ext_resource type="Script" path="res://city_block.gd" id="1_roj48"]
-[ext_resource type="Script" path="res://blocks/crowd_follower.gd" id="2_pj45h"]
-[ext_resource type="Texture2D" uid="uid://bfm0u32d2c2xk" path="res://balloon_boy.png" id="3_qmij3"]
+[ext_resource type="Script" uid="uid://c2cdu73r8rw0e" path="res://city_block.gd" id="1_roj48"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_m6f28"]
 size = Vector3(9, 0, 9)
@@ -28,74 +26,51 @@ albedo_color = Color(0.484398, 0.484398, 0.484398, 1)
 material = SubResource("StandardMaterial3D_m1gu3")
 size = Vector3(3.5, 0.1, 9)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7y5fr"]
-transparency = 1
-albedo_texture = ExtResource("3_qmij3")
-
-[sub_resource type="QuadMesh" id="QuadMesh_jyk4q"]
-material = SubResource("StandardMaterial3D_7y5fr")
-size = Vector2(0.2, 0.3)
-center_offset = Vector3(0, 0.1, 0)
-
-[node name="IBlock" type="Node3D" node_paths=PackedStringArray("player_path")]
+[node name="IBlock" type="Node3D" unique_id=1020480183 node_paths=PackedStringArray("player_path")]
 script = ExtResource("1_roj48")
 area = SubResource("BoxShape3D_m6f28")
 player_path = NodePath("PlayerPath")
 next_block_offset = Vector3(0, 0, 9)
 
-[node name="Building" type="Label3D" parent="."]
+[node name="Building" type="Label3D" parent="." unique_id=1898501327]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 3, 0, 0)
 text = "Building"
 
-[node name="Building2" type="Label3D" parent="."]
+[node name="Building2" type="Label3D" parent="." unique_id=380583670]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 3, 0, -3)
 text = "Building"
 
-[node name="Building3" type="Label3D" parent="."]
+[node name="Building3" type="Label3D" parent="." unique_id=1464218014]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 3, 0, 3)
 text = "Building"
 
-[node name="Building4" type="Label3D" parent="."]
+[node name="Building4" type="Label3D" parent="." unique_id=773629282]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -3, 0, 3)
 text = "Building"
 
-[node name="Building5" type="Label3D" parent="."]
+[node name="Building5" type="Label3D" parent="." unique_id=1658555076]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -3, 0, 0)
 text = "Building"
 
-[node name="Building6" type="Label3D" parent="."]
+[node name="Building6" type="Label3D" parent="." unique_id=1217853113]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -3, 0, -3)
 text = "Building"
 
-[node name="PlayerPath" type="Path3D" parent="."]
+[node name="PlayerPath" type="Path3D" parent="." unique_id=1407347727]
 curve = SubResource("Curve3D_m3mx2")
 
-[node name="Obstacle" type="Label3D" parent="."]
+[node name="Obstacle" type="Label3D" parent="." unique_id=1982965345]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 text = "Obstacle"
 
-[node name="Road" type="MeshInstance3D" parent="."]
+[node name="Road" type="MeshInstance3D" parent="." unique_id=771731633]
 mesh = SubResource("PlaneMesh_y6e37")
 
-[node name="Sidewalkleft" type="MeshInstance3D" parent="."]
+[node name="Sidewalkleft" type="MeshInstance3D" parent="." unique_id=241708599]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.8, 0, 0)
 mesh = SubResource("BoxMesh_xaofo")
 
-[node name="Sidewalkright" type="MeshInstance3D" parent="."]
+[node name="Sidewalkright" type="MeshInstance3D" parent="." unique_id=1769103893]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.8, 0, 0)
 mesh = SubResource("BoxMesh_xaofo")
 skeleton = NodePath("../Sidewalkleft")
-
-[node name="SidewalkPath" type="Path3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.18961, 0.1, 0)
-curve = SubResource("Curve3D_m3mx2")
-
-[node name="Person" type="PathFollow3D" parent="SidewalkPath"]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -4.5)
-script = ExtResource("2_pj45h")
-base_speed = 0.05
-speed_variation = 0.003
-sprites = Array[Texture]([ExtResource("3_qmij3")])
-
-[node name="Sprite" type="MeshInstance3D" parent="SidewalkPath/Person"]
-mesh = SubResource("QuadMesh_jyk4q")
